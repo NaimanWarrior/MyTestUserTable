@@ -1,0 +1,36 @@
+﻿@page
+@model ExtendedCrud.Pages.Account.RegisterModel
+@{
+	ViewData["Title"] = "Registration";
+}
+
+<div class="container mt-5" style="max-width: 400px;">
+    <h2 class="text-center mb-4">Регистрация</h2>
+
+    <form method="post">
+        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+        <div class="mb-3">
+            <label class="form-label">Email / Логин</label>
+            <input type="email" asp-for="Input.Email" class="form-control" required />
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Пароль</label>
+            <input type="password" asp-for="Input.Password" class="form-control" required />
+            <span asp-validation-for="Input.Password" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Подтверждение пароля</label>
+            <input type="password" asp-for="Input.ConfirmPassword" class="form-control" required />
+            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+        </div>
+
+        <div class="d-grid gap-2 mt-4">
+            <button type="submit" class="btn btn-success btn-lg">Зарегистрироваться</button>
+            <a asp-page="/Index" class="btn btn-outline-secondary">Уже есть аккаунт? Войти</a>
+        </div>
+    </form>
+</div>

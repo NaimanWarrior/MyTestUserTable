@@ -1,0 +1,43 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="container mt-5" style="max-width: 400px;">
+    <h2 class="text-center mb-4">Authorization</h2>
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            @Model.ErrorMessage
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @* <div class="alert alert-danger">@Model.ErrorMessage</div> *@
+    }
+
+    <form method="post">
+        <div class="mb-3">
+            <label class="form-label">Email / Логин</label>
+            <input type="email" asp-for="Input.Email" class="form-control" required />
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Пароль</label>
+            <input type="password" asp-for="Input.Password" class="form-control" required />
+            <span asp-validation-for="Input.Password" class="text-danger"></span>
+        </div>
+
+        <div class="d-grid gap-2 mt-4">
+            <button type="submit" class="btn btn-primary btn-lg">Войти</button>
+
+            <a asp-page="/Account/Register" class="btn btn-outline-secondary btn-lg">Зарегистрироваться</a>
+        </div>
+    </form>
+</div>
+
+@* <div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div> *@

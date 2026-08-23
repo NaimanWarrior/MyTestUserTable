@@ -1,0 +1,55 @@
+﻿@page
+@model ExtendedCrud.Pages.Users.IndexModel
+@{
+	ViewData["Title"] = "Список пользователей";
+}
+
+<div class="container mt-4">
+    <h2>Список пользователей</h2>
+    <table class="table table-bordered table-striped mt-3">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Email / Имя</th>
+                <th>Статус</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.Users)
+            {
+                <tr>
+                    <td>@user.UserName</td>
+                    <td>
+                        @if (user.IsBlocked)
+                        {
+                            <span class="badge bg-danger">Заблокирован</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-success">Активен</span>
+                        }
+                    </td>
+                    <td>
+                        @if (user.IsBlocked)
+                        {
+                            <form method="post" asp-page-handler="Unblock" asp-route-id="@user.Id" class="d-inline">
+                                <button class="btn btn-sm btn-warning">Разблокировать</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <form method="post" asp-page-handler="Block" asp-route-id="@user.Id" class="d-inline">
+                                <button class="btn btn-sm btn-secondary">Заблокировать</button>
+                            </form>
+                        }
+
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@user.Id" class="d-inline ms-1">
+                            <button class="btn btn-sm btn-danger" onclick="return confirm('Удалить пользователя?')">Удалить</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
