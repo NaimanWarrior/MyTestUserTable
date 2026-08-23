@@ -40,6 +40,7 @@ namespace ExtendedCrud.Pages.Users
             if (user != null)
             {
                 user.IsBlocked = true;
+                await _userManager.UpdateSecurityStampAsync(user);
                 await _userManager.UpdateAsync(user);
                 var currentUserId = _userManager.GetUserId(User);
                 if (currentUserId == id)

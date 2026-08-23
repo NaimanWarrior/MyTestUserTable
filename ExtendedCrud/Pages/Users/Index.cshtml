@@ -9,9 +9,10 @@
     <table class="table table-bordered table-striped mt-3">
         <thead class="table-dark">
             <tr>
-                <th>ID</th>
-                <th>Email / Имя</th>
+                <th>Name</th>
+                <th>Email</th>
                 <th>Статус</th>
+                <th>Последний вход</th>
                 <th>Действия</th>
             </tr>
         </thead>
@@ -20,6 +21,7 @@
             {
                 <tr>
                     <td>@user.UserName</td>
+                    <td>@user.Email</td>
                     <td>
                         @if (user.IsBlocked)
                         {
@@ -28,6 +30,15 @@
                         else
                         {
                             <span class="badge bg-success">Активен</span>
+                        }
+                    </td>
+                    <td>
+                        @if (user.LastLoginDate.HasValue)
+                        {
+                            @user.LastLoginDate.Value.ToLocalTime().ToString("dd.MM.yyyy HH:mm");
+                        } else
+                        {
+                            <span class="text-muted">Never</span>
                         }
                     </td>
                     <td>

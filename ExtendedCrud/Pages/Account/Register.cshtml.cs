@@ -24,6 +24,9 @@ namespace ExtendedCrud.Pages.Account
 
         public class InputModel
         {
+            [Required(ErrorMessage = "Введите имя")]
+            public string Name { get; set; } = string.Empty;
+
             [Required(ErrorMessage = "Введите имя пользователя / Email")]
             [EmailAddress(ErrorMessage = "Некорректный формат Email")]
             public string Email { get; set; } = string.Empty;
@@ -45,11 +48,13 @@ namespace ExtendedCrud.Pages.Account
             if (!ModelState.IsValid)
                 return Page();
 
-            var user = new AppUser { UserName = Input.Email, Email = Input.Email };
+            var user = new AppUser { UserName = Input.Name, Email = Input.Email };
             var result = await _userManager.CreateAsync(user, Input.Password);
 
             if (result.Succeeded)
             {
+                user.LastLoginDate = DateTime.UtcNow;
+                await _userManager.UpdateAsync(user);
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 return RedirectToPage("/Users/Index");
             }

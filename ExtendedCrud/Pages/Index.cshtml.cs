@@ -25,6 +25,9 @@ namespace ExtendedCrud.Pages
         public class InputModel
         {
             [Required(ErrorMessage = "Введите Email")]
+            public string Name { get; set; } = string.Empty;
+
+            [Required(ErrorMessage = "Введите Email")]
             [EmailAddress(ErrorMessage = "Некорректный формат Email")]
             public string Email { get; set; } = string.Empty;
 
@@ -49,14 +52,23 @@ namespace ExtendedCrud.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-                return Page();
+            //if (!ModelState.IsValid)
+            //    return Page();
 
             var user = await _userManager.FindByEmailAsync(Input.Email);
             if (user == null)
             {
                 ErrorMessage = "Неверный логин или пароль.";
                 return Page();
+            } else
+            {
+                var result = await _signInManager.PasswordSignInAsync(user.UserName!, Input.Password, false, false);
+                if (result.Succeeded)
+                {
+                    user.LastLoginDate = DateTime.UtcNow;
+                    await _userManager.UpdateAsync(user);
+                    return RedirectToPage("/Users/Index");
+                }
             }
 
             if (user.IsBlocked)
@@ -65,12 +77,7 @@ namespace ExtendedCrud.Pages
                 return Page();
             }
 
-            var result = await _signInManager.PasswordSignInAsync(user.UserName!, Input.Password, false, false);
-
-            if (result.Succeeded)
-            {
-                return RedirectToPage("/Users/Index");
-            }
+            
 
             ErrorMessage = "Неверный логин или пароль.";
             return Page();

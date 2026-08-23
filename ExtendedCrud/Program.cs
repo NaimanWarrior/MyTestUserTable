@@ -42,8 +42,7 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var dbContext = services.GetRequiredService<AddDbContext>();
-
-        dbContext.Database.EnsureCreated();
+        dbContext.Database.Migrate();
     }
     catch (Exception ex)
     {

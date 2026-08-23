@@ -17,6 +17,12 @@
     }
 
     <form method="post">
+        @* <div class="mb-3">
+            <label class="form-label">Имя</label>
+            <input type="name" asp-for="Input.Name" class="form-control" required />
+            <span asp-validation-for="Input.Name" class="text-danger"></span>
+        </div> *@
+
         <div class="mb-3">
             <label class="form-label">Email / Логин</label>
             <input type="email" asp-for="Input.Email" class="form-control" required />
@@ -31,10 +37,11 @@
 
         <div class="d-grid gap-2 mt-4">
             <button type="submit" class="btn btn-primary btn-lg">Войти</button>
-
-            <a asp-page="/Account/Register" class="btn btn-outline-secondary btn-lg">Зарегистрироваться</a>
         </div>
     </form>
+    <div class="mt-3 text-center">
+        <p class="mb-0">Ещё нет аккаунта? <a asp-page="/Account/Register">Зарегистрироваться</a></p>
+    </div>
 </div>
 
 @* <div class="text-center">
